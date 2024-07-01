@@ -1,5 +1,7 @@
-package com.sdu.pandevbot;
+package com.sdu.pandevbot.service;
 
+import com.sdu.pandevbot.repository.CategoryRepository;
+import com.sdu.pandevbot.repository.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.transaction.Transactional;
 

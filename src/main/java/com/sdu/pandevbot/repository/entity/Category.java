@@ -1,4 +1,4 @@
-package com.sdu.pandevbot;
+package com.sdu.pandevbot.repository.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -42,9 +42,4 @@ public class Category {
 		this.children.add(child);
 	}
 
-	// Метод для удаления дочернего элемента
-	public void removeChild(Category child) {
-		this.children.remove(child);
-		child.setParent(null);
-	}
 }
