@@ -1,6 +1,6 @@
 package com.sdu.pandevbot.command;
 
-import com.sdu.pandevbot.service.CategoryService;
+import com.sdu.pandevbot.service.CategoryServiceImpl;
 import com.sdu.pandevbot.service.SendMessageService;
 import com.sdu.pandevbot.service.SendMessageServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ abstract class AbstractCommandTest {
 
 	protected TelegramClient telegramClient = Mockito.mock(TelegramClient.class);
 	protected SendMessageService sendMessageService = new SendMessageServiceImpl(telegramClient);
-	protected CategoryService categoryService = Mockito.mock(CategoryService.class);
+	protected CategoryServiceImpl categoryService = Mockito.mock(CategoryServiceImpl.class);
 
 	abstract String getCommandName();
 

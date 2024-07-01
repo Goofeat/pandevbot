@@ -1,7 +1,7 @@
 package com.sdu.pandevbot.bot;
 
 import com.sdu.pandevbot.command.CommandContainer;
-import com.sdu.pandevbot.service.CategoryService;
+import com.sdu.pandevbot.service.CategoryServiceImpl;
 import com.sdu.pandevbot.service.SendMessageServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ public class TelegramBot implements SpringLongPollingBot, LongPollingSingleThrea
 
 	private final CommandContainer commandContainer;
 
-	public TelegramBot(TelegramClient telegramClient, CategoryService categoryService) {
+	public TelegramBot(TelegramClient telegramClient, CategoryServiceImpl categoryService) {
 		this.commandContainer = new CommandContainer(
 				new SendMessageServiceImpl(telegramClient),
 				categoryService

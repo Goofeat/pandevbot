@@ -16,11 +16,13 @@ public class HelpCommand implements Command {
 			%s – Добавить корневой элемент
 			%s – Добавить дочерний элемент
 			%s – Удалить элемент
+			%s – Скачать Excel документ с деревом категорий
 			%s – Показать это сообщение""",
 			VIEWTREE.getCommandName(),
 			ADD.getCommandName(),
 			ADDCHILD.getCommandName(),
 			REMOVE.getCommandName(),
+			DOWNLOAD.getCommandName(),
 			HELP.getCommandName());
 
 	public HelpCommand(SendMessageService sendBotMessageService) {

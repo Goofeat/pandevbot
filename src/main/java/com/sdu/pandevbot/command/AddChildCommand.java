@@ -1,15 +1,15 @@
 package com.sdu.pandevbot.command;
 
-import com.sdu.pandevbot.service.CategoryService;
+import com.sdu.pandevbot.service.CategoryServiceImpl;
 import com.sdu.pandevbot.service.SendMessageService;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 public class AddChildCommand implements Command {
 
 	private final SendMessageService sendMessageService;
-	private final CategoryService categoryService;
+	private final CategoryServiceImpl categoryService;
 
-	public AddChildCommand(SendMessageService sendMessageService, CategoryService categoryService) {
+	public AddChildCommand(SendMessageService sendMessageService, CategoryServiceImpl categoryService) {
 		this.sendMessageService = sendMessageService;
 		this.categoryService = categoryService;
 	}

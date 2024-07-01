@@ -14,7 +14,6 @@ public class Category {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_seq")
-	@SequenceGenerator(name = "category_seq", sequenceName = "category_id_seq", allocationSize = 1)
 	private Long id;
 
 	private Long userId;
@@ -28,7 +27,6 @@ public class Category {
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Category> children = new ArrayList<>();
 
-	// Конструкторы
 	public Category() {
 	}
 
@@ -36,7 +34,6 @@ public class Category {
 		this.name = name;
 	}
 
-	// Метод для добавления дочернего элемента
 	public void addChild(Category child) {
 		child.setParent(this);
 		this.children.add(child);

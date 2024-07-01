@@ -1,6 +1,6 @@
 package com.sdu.pandevbot.command;
 
-import com.sdu.pandevbot.service.CategoryService;
+import com.sdu.pandevbot.service.CategoryServiceImpl;
 import com.sdu.pandevbot.service.SendMessageService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +18,7 @@ class CommandContainerTest {
 	@BeforeEach
 	public void init() {
 		SendMessageService sendMessageService = Mockito.mock(SendMessageService.class);
-		CategoryService categoryService = Mockito.mock(CategoryService.class);
+		CategoryServiceImpl categoryService = Mockito.mock(CategoryServiceImpl.class);
 		commandContainer = new CommandContainer(sendMessageService, categoryService);
 	}
 

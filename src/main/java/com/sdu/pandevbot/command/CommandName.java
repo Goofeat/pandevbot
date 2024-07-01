@@ -6,12 +6,13 @@ import lombok.Getter;
 public enum CommandName {
 
 	START("/start"),
+	HELP("/help"),
+	NO("nocommand"),
 	VIEWTREE("/viewtree"),
 	ADD("/add"),
 	ADDCHILD("/addchild"),
 	REMOVE("/remove"),
-	HELP("/help"),
-	NO("nocommand");
+	DOWNLOAD("/download");
 
 	private final String commandName;
 
