@@ -8,26 +8,30 @@ import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Service
-public class Service {
+public class CategoryService {
 
-	private final Repository categoryRepository;
+	private final CategoryRepository categoryRepository;
 
 	@Autowired
-	public Service(Repository categoryRepository) {
+	public CategoryService(CategoryRepository categoryRepository) {
 		this.categoryRepository = categoryRepository;
 	}
 
 	@Transactional
-	public String viewTree() {
-		List<Category> categories = categoryRepository.findAllWithChildren();
+	public String viewTree(Long userId) {
+		List<Category> categories = categoryRepository.findAllByUserId(userId);
 		StringBuilder treeView = new StringBuilder();
-		treeView.append("<pre>");
 		for (Category category : categories) {
 			if (category.getParent() == null) {
 				buildTreeView(category, treeView, 0, new ArrayList<>());
 			}
 		}
-		treeView.append("</pre>");
+
+		if (!treeView.isEmpty()) {
+			treeView.insert(0, "<pre>");
+			treeView.append("</pre>");
+		}
+
 		return treeView.toString();
 	}
 
@@ -50,18 +54,18 @@ public class Service {
 	}
 
 	@Transactional
-	public String addElement(String name) {
+	public String addElement(Long userId, String name) {
 		if (categoryRepository.findByName(name).isPresent()) {
 			return "Элемент с таким именем уже существует.";
 		}
-		Category category = new Category();
-		category.setName(name);
+		Category category = new Category(name);
+		category.setUserId(userId);
 		categoryRepository.save(category);
 		return "Элемент успешно добавлен.";
 	}
 
 	@Transactional
-	public String addElement(String parentName, String childName) {
+	public String addElement(Long userId, String parentName, String childName) {
 		Optional<Category> parentOpt = categoryRepository.findByName(parentName);
 		if (parentOpt.isEmpty()) {
 			return "Родительский элемент не найден.";
@@ -70,17 +74,17 @@ public class Service {
 			return "Элемент с таким именем уже существует.";
 		}
 		Category parent = parentOpt.get();
-		Category child = new Category();
-		child.setName(childName);
+		Category child = new Category(childName);
+		child.setUserId(userId);
 		child.setParent(parent);
-		parent.getChildren().add(child);
+		parent.addChild(child);
 		categoryRepository.save(parent);
 		return "Элемент успешно добавлен.";
 	}
 
 	@Transactional
-	public String removeElement(String name) {
-		Optional<Category> categoryOpt = categoryRepository.findByName(name);
+	public String removeElement(Long userId, String name) {
+		Optional<Category> categoryOpt = categoryRepository.findByNameAndUserId(name, userId);
 		if (categoryOpt.isEmpty()) {
 			return "Элемент не найден.";
 		}

@@ -1,7 +1,5 @@
 package com.sdu.pandevbot;
 
-import org.springframework.beans.factory.annotation.Value;
-
 public class Constants {
 
 	public static final String START_MESSAGE = """

@@ -1,7 +1,6 @@
 package com.sdu.pandevbot;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.client.okhttp.OkHttpTelegramClient;
 import org.telegram.telegrambots.longpolling.BotSession;
@@ -22,14 +21,14 @@ import static com.sdu.pandevbot.Constants.HELP_MESSAGE;
 import static com.sdu.pandevbot.Constants.START_MESSAGE;
 
 @Component
-public class Bot implements SpringLongPollingBot, LongPollingSingleThreadUpdateConsumer {
+public class TelegramBot implements SpringLongPollingBot, LongPollingSingleThreadUpdateConsumer {
 
 	private final TelegramClient telegramClient;
 
 	@Autowired
-	private Service categoryService;
+	private CategoryService categoryService;
 
-	public Bot() {
+	public TelegramBot() {
 		telegramClient = new OkHttpTelegramClient(getBotToken());
 	}
 
@@ -57,15 +56,15 @@ public class Bot implements SpringLongPollingBot, LongPollingSingleThreadUpdateC
 			if (messageText.equalsIgnoreCase("/start")) {
 				sendStartMessage(chatId);
 			} else if (messageText.equalsIgnoreCase("/viewtree") || messageText.equalsIgnoreCase("/vt")) {
-				String tree = categoryService.viewTree();
+				String tree = categoryService.viewTree(userId);
 				sendMessage(chatId, tree.isEmpty() ? "Дерево категорий пусто" : tree);
 			} else if (messageText.startsWith("/addElement") || messageText.startsWith("/add")) {
 				String[] parts = messageText.split(" ", 3);
 				String response;
 				if (parts.length == 2) {
-					response = categoryService.addElement(parts[1]);
+					response = categoryService.addElement(userId, parts[1]);
 				} else if (parts.length == 3) {
-					response = categoryService.addElement(parts[1], parts[2]);
+					response = categoryService.addElement(userId, parts[1], parts[2]);
 				} else {
 					response = "Неверный формат команды.";
 				}
@@ -74,7 +73,7 @@ public class Bot implements SpringLongPollingBot, LongPollingSingleThreadUpdateC
 				String[] parts = messageText.split(" ", 2);
 				String response;
 				if (parts.length == 2) {
-					response = categoryService.removeElement(parts[1]);
+					response = categoryService.removeElement(userId, parts[1]);
 				} else {
 					response = "Неверный формат команды.";
 				}

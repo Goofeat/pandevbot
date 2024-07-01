@@ -17,6 +17,8 @@ public class Category {
 	@SequenceGenerator(name = "category_seq", sequenceName = "category_id_seq", allocationSize = 1)
 	private Long id;
 
+	private Long userId;
+
 	private String name;
 
 	@ManyToOne
